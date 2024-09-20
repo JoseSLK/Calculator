@@ -3,9 +3,9 @@ from flask import Flask, jsonify
 def create_app():
     app = Flask(__name__)
 
-    # Importar y registrar los blueprints (rutas)
-    from .service1 import bp as service1_bp
-    from .service2 import bp as service2_bp
+    # Importar y registrar (rutas)
+    from service1 import bp as service1_bp
+    from service2 import bp as service2_bp
     
     app.register_blueprint(service1_bp)
     app.register_blueprint(service2_bp)
