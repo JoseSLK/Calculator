@@ -7,7 +7,6 @@ def biseccion(data):
     b = data['sup_limit']
     tol = data['tolerance']
 
-
     n = 500
 
     i = 1
@@ -25,7 +24,6 @@ def biseccion(data):
             a = p
         else:
             b = p
-    print("Iteraciones agotadas: Error!")
     return None
     
 # biseccion(pol, 1, 2, 1e-8)
