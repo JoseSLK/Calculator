@@ -16,7 +16,7 @@ def biseccion(data):
 
     while i <= n:
         p = a + (b - a)/2
-        print("i = {0:<2}, p = {1:.12f}".format(i,p))
+        #print("i = {0:<2}, p = {1:.12f}".format(i,p))
         if abs(f(p)) <= 1e-15 or (b - a)/2 < tol:
             return p
         i += 1
@@ -26,4 +26,3 @@ def biseccion(data):
             b = p
     return None
     
-# biseccion(pol, 1, 2, 1e-8)

@@ -20,12 +20,3 @@ def biseccion_r():
     
     result = biseccion(data)
     return jsonify(result)
-    #valid, error_message = validate_function(data.get('function'))
-    #if not valid:
-    #    return False, error_message
-    
-    #valid, error_message = validate_tolerance(data.get('tolerance'))
-    #if not valid:
-    #    return False, error_message
-    
-    #return True, ""
