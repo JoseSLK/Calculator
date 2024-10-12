@@ -8,8 +8,7 @@ def puntofijo(data):
     p0 = data['initial_point']
     tol = data['tolerance']
 
-    try:
-        def f(x):
+    def f(x):
             return eval(f_str)
 
     while i <= n:

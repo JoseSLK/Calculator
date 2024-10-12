@@ -1,15 +1,12 @@
 from flask import request, jsonify
 from ..methods.punto_fijo import puntofijo
+from .validation import validate_function, validate_numeric, validate_tolerance, validate_limits
 
 def puntofijo_r():
     
     data = request.json
 
     valid, error_message = validate_function(data['function'])
-    if not valid:
-        return jsonify({"error": error_message}), 400
-    
-    valid, error_message = validate_limits(data['min_limit'], data['sup_limit'])
     if not valid:
         return jsonify({"error": error_message}), 400
     
