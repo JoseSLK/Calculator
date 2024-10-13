@@ -10,6 +10,10 @@ def puntofijo_r():
     if not valid:
         return jsonify({"error": error_message}), 400
     
+    valid, error_message = validate_numeric(data['initial_point'])
+    if not valid:
+        return jsonify({"error": error_message})
+    
     valid, error_message = validate_tolerance(data['tolerance'])
     if not valid:
         return jsonify({"error": error_message}), 400
