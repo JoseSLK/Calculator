@@ -8,17 +8,16 @@ def newton_raphson_r():
     # Validar la función
     valid, error_message = validate_function(data['function'])
     if not valid:
-        return jsonify({"error": error_message}), 400
-
-    # Validar punto inicial 'a'
-    valid, error_message = validate_numeric(data['initial_point_a'])
+        return jsonify({"error": f"funcion: {error_message}"}), 400
+    
+    valid, error_message = validate_function(data['fprima'])
     if not valid:
-        return jsonify({"error": f"initial point a: {error_message}"}), 400
+        return jsonify({"error": f"f prima: {error_message}"}), 400
 
-    # Validar punto inicial 'b' (si se requiere en el método de Newton)
-    valid, error_message = validate_numeric(data['initial_point_b'])
+    # Validar punto inicial
+    valid, error_message = validate_numeric(data['p0'])
     if not valid:
-        return jsonify({"error": f"initial point b: {error_message}"}), 400
+        return jsonify({"error": f"initial point: {error_message}"}), 400
 
     # Validar la tolerancia
     valid, error_message = validate_tolerance(data['tolerance'])
