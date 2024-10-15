@@ -20,9 +20,7 @@ def secante_r():
     valid, error_message = validate_tolerance(data['tolerance'])
     if not valid:
         return jsonify({"error": error_message}), 400
-    
 
- 
     result = secante(data)
     return jsonify(result)
 
