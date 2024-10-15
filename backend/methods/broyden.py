@@ -10,7 +10,6 @@ def broyden(data):
     x = sp.symbols(f'x0:{n}')  
 
     f_exprs = [sp.sympify(func) for func in data['function']]
-    
     f = sp.lambdify(x, f_exprs)
 
     x0 = np.array(data['initial_point'], dtype=float) 
@@ -19,6 +18,8 @@ def broyden(data):
     J = sp.Matrix(f_exprs).jacobian(x)
     J_func = sp.lambdify(x, J)  
     B = np.array(J_func(*x0), dtype=float)  
+
+    iteration = []
     
     for i in range(max_iter):
         B_reg = B + regularization * np.eye(n)
@@ -26,15 +27,25 @@ def broyden(data):
         try:
             dx = np.linalg.solve(B_reg, -fx)
         except np.linalg.LinAlgError:
-            print(f"Matriz singular en la iteración {i}")
-            return None
+            return {"error": f"Matriz singular en la iteración {i}"}
         
         newx = x0 + dx 
-        newfx = np.array(f(*newx), dtype=float) 
+        newfx = np.array(f(*newx), dtype=float)
+        
+        # Guarda los resultados de cada iteración en formato JSON
+        iteration.append({
+            "iteracion": i + 1,
+            "x": newx.tolist(),
+            "f(x)": newfx.tolist(),
+            "error": np.linalg.norm(newfx)
+        })
         
         if np.linalg.norm(newfx) < tol:
-            print(f"Iteraciones = {i + 1}")
-            return newx.tolist() 
+            return {
+                "resultado": newx.tolist(),
+                "iteraciones": iteration,
+                "mensaje": f"Convergencia alcanzada en {i + 1} iteraciones"
+            }
         
         delta_x = newx - x0
         delta_f = newfx - fx
@@ -43,5 +54,8 @@ def broyden(data):
         x0 = newx
         fx = newfx
     
-    print(f'Iteraciones agotadas: error!')
-    return x0.tolist()
+    return {
+        "resultado": x0.tolist(),
+        "iteraciones": iteration,
+        "mensaje": "Iteraciones agotadas sin convergencia"
+    }
