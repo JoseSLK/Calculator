@@ -24,7 +24,6 @@ def biseccion(data):
 
     while i <= n:
         p = a + (b - a)/2
-        #print("i = {0:<2}, p = {1:.12f}".format(i,p))
         iteraciones.append({
             "iteracion": i + 1,
             "x": p,
