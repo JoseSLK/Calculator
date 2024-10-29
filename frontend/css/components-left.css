@@ -1,6 +1,7 @@
 /* Config inputs */
 #s_method{
     border-color: #8C4B45;
+    max-width: 500px;
 }
 
 .input-equations-w {
@@ -16,6 +17,14 @@
     .input-equations-w{
         width: 90%;
     }
+}
+
+#equation_form {
+    max-width: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
 }
 
 .label-eq {
@@ -41,9 +50,34 @@
 
 }
 
-.input-limits {
-    width: 100px;
+.input-limits, .input-nlimits, .input-neq{
+    flex: 1;
+    min-width: 80px;
+    max-width: 200px;
     height: 30px;
     margin-bottom: 5px;
     border-color: #8C4B45;
+}
+.input-group {
+    margin-top: 10px;
+}
+
+#equation_form div {
+    width: 100%;
+    display: block;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.humble-hr {
+    width: 100%;
+    border: none;
+    height: 2px;
+    background-color: black;
+    margin: 1px 0;
+    transition: background-color 0.3s;
+}
+
+.humble-hr:hover{
+    background-color: #4F5F73;
 }
