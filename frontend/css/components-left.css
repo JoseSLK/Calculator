@@ -1,9 +1,15 @@
 /* Config inputs */
+#s_method{
+    border-color: #8C4B45;
+}
+
 .input-equations-w {
     width: 100%;
     padding: 5px 5px;
-    width: 600px;
-    height: 34px;
+    min-height: 34px;
+    border-radius: 3px;
+    border-color: #8C4B45;
+    background-color: #CCC4C0;
 }
 
 @media (max-width: 768px) {
@@ -18,19 +24,26 @@
 
 .btn-success-eq {
     font-family: system-ui;
-    background-color: #04BFAD;
+    background-color: #4F5F73;
     font-size: small;
     text-align: center;
     width: 150px;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.btn-success-eq:hover{
+    background-color: #8C4B45;
+    color: #CCC4C0;
+    border-color: #4F5F73;
+
 }
 
 .input-limits {
     width: 100px;
     height: 30px;
     margin-bottom: 5px;
-    border-color: #04BFAD;
+    border-color: #8C4B45;
 }
