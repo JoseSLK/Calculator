@@ -1,0 +1,36 @@
+/* Config inputs */
+.input-equations-w {
+    width: 100%;
+    padding: 5px 5px;
+    width: 600px;
+    height: 34px;
+}
+
+@media (max-width: 768px) {
+    .input-equations-w{
+        width: 90%;
+    }
+}
+
+.label-eq {
+    padding: 2px 5px 2px 5px;
+}
+
+.btn-success-eq {
+    font-family: system-ui;
+    background-color: #04BFAD;
+    font-size: small;
+    text-align: center;
+    width: 150px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-limits {
+    width: 100px;
+    height: 30px;
+    margin-bottom: 5px;
+    border-color: #04BFAD;
+}
