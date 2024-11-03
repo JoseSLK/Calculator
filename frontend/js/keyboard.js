@@ -9,32 +9,19 @@ document.addEventListener('focusin', (event) => {
 
 function insertValue(value) {
     if (lastFocusedElement) {
-        if(lastFocusedElement.classList.contains("mathquill-input")){
-            const mathField = MQ.MathField(lastFocusedElement);
-
-            if(value === '\\sqrt{}'){
-                mathField.write('\\sqrt{}'); // Inserta el comando de raíz cuadrada
-                lastFocusedElement.focus();
-
-                const cursorPos = mathField.selection.end;
-                mathField.selection.end = cursorPos - 1;
-            }else{
-                mathField.write(value); 
-                lastFocusedElement.focus();  
-            }      
-        }else{
-            lastFocusedElement.textContent += value;
+        if (lastFocusedElement.value !== undefined) {
+            console.log("entro")
+            lastFocusedElement.value += value;
+            lastFocusedElement.focus();
         }
-        lastFocusedElement.value += value; 
-        lastFocusedElement.focus(); 
-    }else {
-        console.log('No hay un elemento enfocado para insertar el valor');
     }
 }
 
 // Evento para cada botón del teclado
 document.querySelectorAll('.keyboard-button').forEach(button => {
-    button.addEventListener('click', function() {
-        insertValue(button.dataset.value);
-    });
+    if (button.dataset && button.dataset.value) {
+        button.addEventListener('click', function() {
+            insertValue(button.dataset.value);
+        });
+    }
 });

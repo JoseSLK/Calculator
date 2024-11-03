@@ -9,8 +9,11 @@ export const METHODS = {
 };
 
 export const symbolMap = {
-    '√': 'sqrt',
-    '^': '**',
-    'sen': 'sin',
-    'X': 'x',
+    '\\sin': 'sin',       // Función seno
+    '\\cos': 'cos',       // Función coseno
+    '\\tan': 'tan',       // Función tangente
+    '\\log': 'log',       // Logaritmo
+    '\\pi': 'pi',         // Constante pi
+    '\\e': 'e',           // Constante e
+    ' ': ''               // Eliminar espacios
 };
