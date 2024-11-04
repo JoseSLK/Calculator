@@ -9,8 +9,9 @@ document.getElementById("s_method").addEventListener("change", function(){
     const methodInfo = METHODS[id_method];
     const form_eq = document.getElementById("equation_form");
     form_eq.innerHTML = "";
+    let input_var;
 
-    if (id_method === "5" || id_method === "6"){
+    if (id_method === "5" || id_method === "6" || id_method === "7" || id_method === "8"){
         console.log("ENTRO")
         const hr = document.createElement("hr")
         hr.classList.add("humble-hr")
@@ -21,10 +22,6 @@ document.getElementById("s_method").addEventListener("change", function(){
         label_ne.textContent = `Numero de ecuaciones`;
         label_ne.classList.add("form-label", "label-eq");
 
-        const label_nvar = document.createElement("label");
-        label_nvar.textContent = "Numero de variables";
-        label_nvar.classList.add("form-label", "label-eq");
-
         const input_ne = document.createElement("input");
         input_ne.type = "number";
         input_ne.name = `nequations`
@@ -33,24 +30,38 @@ document.getElementById("s_method").addEventListener("change", function(){
         input_ne.max = 8;
         input_ne.classList.add("form-control", "input-neq");
 
-        const input_var = document.createElement("input");
-        input_var.type = "number"
-        input_var.name = 'nvar'
-        input_var.required = true
-        input_var.min = 1;
-        input_var.max = 5;
-        input_var.classList.add("form-control", "input-nlimits")
-
         form_eq.appendChild(hr);
         div_in.appendChild(label_ne);
         div_in.appendChild(input_ne);
-        div_in.appendChild(label_nvar);
-        div_in.appendChild(input_var);
+
+        if (id_method === "5" || id_method === "6") {
+            const label_nvar = document.createElement("label");
+            label_nvar.textContent = "Numero de variables";
+            label_nvar.classList.add("form-label", "label-eq");
+    
+            input_var = document.createElement("input");
+            input_var.type = "number"
+            input_var.name = 'nvar'
+            input_var.required = true
+            input_var.min = 1;
+            input_var.max = 5;
+            input_var.classList.add("form-control", "input-nlimits")
+    
+            div_in.appendChild(label_nvar);
+            div_in.appendChild(input_var);
+        }
+        
         form_eq.appendChild(div_in)
 
         function updateFields() {
             const numEquations = parseInt(input_ne.value, 10);
-            const numVar = parseInt(input_var.value, 10);
+            let numVar = 0;
+
+            if (id_method === "5" || id_method === "6") {
+                numVar = parseInt(input_var.value, 10);
+            } else if (id_method === "7" || id_method === "8") {
+                numVar = numEquations;
+            }
 
             form_eq.querySelectorAll(".dynamic-fields").forEach(el => el.remove());
             if (numEquations > 1 && numEquations <= 8){ 
@@ -98,7 +109,9 @@ document.getElementById("s_method").addEventListener("change", function(){
         }
 
         input_ne.addEventListener("input", updateFields);
-        input_var.addEventListener("input", updateFields);
+        if (id_method === "5" || id_method === "6") {
+            input_var.addEventListener("input", updateFields);
+        }
     }else if(methodInfo) {
 
         const form_inp = document.createElement("div");
