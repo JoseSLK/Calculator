@@ -1,4 +1,8 @@
 from math import *
+import numpy as np
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 def puntofijo(data):
     n = 100  

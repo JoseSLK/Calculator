@@ -4,6 +4,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from sympy import symbols, sympify, lambdify
+from io import BytesIO
+import base64
 
 def secante(data):
     f_str = data["function"]
