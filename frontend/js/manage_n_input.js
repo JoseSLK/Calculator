@@ -18,6 +18,20 @@ document.getElementById("s_method").addEventListener("change", function(){
 
         const div_in = document.createElement("div");
 
+        const tolerance_label = document.createElement("label");
+        tolerance_label.textContent = "Tolerancia (%Error)";
+        tolerance_label.classList.add("form-label", "label-eq");
+
+        const tolerance = document.createElement("input");
+        tolerance.type = "number";
+        tolerance.name = "tolerance";
+        tolerance.id = "tolerance";
+        tolerance.required = true;
+        tolerance.classList.add("form-control", "input-limits")
+
+        div_in.appendChild(tolerance_label)
+        div_in.appendChild(tolerance)
+
         const label_ne = document.createElement("label");
         label_ne.textContent = `Numero de ecuaciones`;
         label_ne.classList.add("form-label", "label-eq");
@@ -115,6 +129,20 @@ document.getElementById("s_method").addEventListener("change", function(){
     }else if(methodInfo) {
 
         const form_inp = document.createElement("div");
+
+        const tolerance_label = document.createElement("label");
+        tolerance_label.textContent = "Tolerancia (%Error)";
+        tolerance_label.classList.add("form-label", "label-eq");
+
+        const tolerance = document.createElement("input");
+        tolerance.type = "number";
+        tolerance.name = "tolerance";
+        tolerance.id = "tolerance";
+        tolerance.required = true;
+        tolerance.classList.add("form-control", "input-limits")
+
+        form_inp.appendChild(tolerance_label)
+        form_inp.appendChild(tolerance)
 
         for(let i =1; i <= methodInfo.equations; i++){
             const label = document.createElement("label");
