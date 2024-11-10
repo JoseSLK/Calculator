@@ -17,9 +17,10 @@ function latexToFormat(latex) {
 
     // Reemplazo para raíz cuadrada \sqrt{argumento}
     latex = latex.replace(/\\sqrt\{([^}]*)\}/g, 'sqrt($1)');
+    latex = latex.replace(/\\sqrt\[(\d+)\]\{([^}]*)\}/g, '($2)**(1/$1)');
 
     // Reemplazo para potencias con notación ^{}
-    latex = latex.replace(/([a-zA-Z0-9]+)\^\{([^}]*)\}/g, '$1**$2');
+    latex = latex.replace(/([a-zA-Z0-9\(\)\+\-\*\/]+)\^\{([^}]*)\}/g, '$1**($2)')
 
     // Reemplazo para potencias con notación simple, como x^2
     latex = latex.replace(/([a-zA-Z0-9]+)\^([a-zA-Z0-9]+)/g, '$1**$2');
@@ -28,20 +29,25 @@ function latexToFormat(latex) {
     latex = latex.replace(/\\(sin|cos|tan|log)\{([^}]*)\}/g, '$1($2)');
     latex = latex.replace(/\\(sin|cos|tan|log)\(([^)]*)\)/g, '$1($2)');
 
-    // Reemplazo para paréntesis \left(...\right)
-    latex = latex.replace(/\\left\(([^)]*)\\right\)/g, '($1)');
+    // Reemplazo para paréntesis \left(...\right) y \left[...\right]
+    latex = latex.replace(/\\left\(/g, '(');
+    latex = latex.replace(/\\right\)/g, ')');
+    latex = latex.replace(/\\left\[/g, '[');
+    latex = latex.replace(/\\right\]/g, ']');
 
-    // Manejo de llaves innecesarias en expresiones LaTeX
-    latex = latex.replace(/\\left\{/g, '{').replace(/\\right\}/g, '}');
+    // Manejo de paréntesis de agrupación como \left{ y \right}
+    latex = latex.replace(/\\left\{/g, '(').replace(/\\right\}/g, ')');
 
     // Reemplazo para productos (\cdot)
     latex = latex.replace(/\\cdot/g, '*');
 
     // Eliminación de backslashes residuales
-    latex = latex.replace(/\\/g, ''); 
+    latex = latex.replace(/\\/g, '');
 
+    console.log(`funcion veri=${latex}`);
     return latex;
 }
+
 
 document.getElementById("submit-data").addEventListener("click", function(){
     const form_eq = document.getElementById("equation_form");
@@ -51,8 +57,6 @@ document.getElementById("submit-data").addEventListener("click", function(){
     let tolerance = 0;
     let hasError = false;
 
-    //Casos especiales donde hay numero de ecuaciones o de variables
-    // form_eq.querySelectorAll("input[name^='limit']").forEach(input => {
     try{
         const nequationsValue = document.getElementsByName("nequations")[0].value;
         const nVar = document.getElementsByName("nvar")[0].value;

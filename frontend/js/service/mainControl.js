@@ -1,4 +1,5 @@
 import { apiService } from "./apiService.js";
+import { iterationsTableFilling } from "../result_table.js"
 
 export function executeRequest (id_method, data){
     switch (id_method) {
@@ -45,16 +46,29 @@ async function puntofijo(data){
 
     const response =  await apiService.puntofijo(dataBack);
     console.log(JSON.stringify(response))
-}
 
-function prueba(){
-    const dataBack = {
-        function: "sqrt((x+5)/2)",
-        initial_point: 0,
-        tolerance: 0.0008
+    const result = response.resultado;
+
+    const container = document.querySelector(".container_sup_t");
+    container.innerHTML = '';
+
+    //Resultado bonito
+    const resultHeader = document.createElement('h4');
+    resultHeader.classList.add("alert", "alert-primary", "text-center", "mt-3");
+    resultHeader.textContent = `El resultado es: ${result}`;
+    container.appendChild(resultHeader);
+
+    if (response.grafica){
+
+        const img = document.createElement('img');
+        img.src = `data:image/png;base64,${response.grafica}`
+        img.alt = "Resultado grafica punto fijo";
+        img.style.width = '100%';
+
+        container.appendChild(img);
     }
-    const response = apiService.puntofijo(dataBack);
-    console.log(JSON.stringify(response))
+
+    iterationsTableFilling(response.iteracion, container)
 }
 // function biseccion(data){
 

@@ -2,7 +2,7 @@ import { API_BASE_URL, defaultHeaders } from "./config.js";
 
 async function postRequest (endpoint, data) {
     try{
-        const response = await fetch(`${API_BASE_URL}${endpoint}`,{//Aqui me envia un error
+        const response = await fetch(`${API_BASE_URL}${endpoint}`,{
             method: 'POST',
             headers: defaultHeaders,
             body: JSON.stringify(data)
@@ -10,7 +10,7 @@ async function postRequest (endpoint, data) {
 
         if (!response.ok){
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Error en la solicitud');//aqui otro   
+            throw new Error(errorData.message || 'Error en la solicitud'); 
         }
 
         return await response.json();

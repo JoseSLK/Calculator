@@ -1,0 +1,15 @@
+.container_sup_t {
+    max-width: auto;
+    overflow-y: auto;
+    padding: 10px;
+    border: 0px solid #ccc;
+}
+
+.container_sup_t img{
+
+    max-width: 60%;
+    height: 60%;
+    display: block;
+    margin: 0 auto;
+    
+}
