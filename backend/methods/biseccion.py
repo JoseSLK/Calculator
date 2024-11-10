@@ -63,7 +63,7 @@ def biseccion(data):
             
             return {
                 "resultado": float(p),
-                "iteraciones": iteraciones,
+                "iteracion": iteraciones,
                 "grafica": img_base64
             }
         i += 1

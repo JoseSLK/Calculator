@@ -43,7 +43,7 @@ def broyden(data):
         if np.linalg.norm(newfx) < tol:
             return {
                 "resultado": newx.tolist(),
-                "iteraciones": iteration,
+                "iteracion": iteration,
                 "mensaje": f"Convergencia alcanzada en {i + 1} iteraciones"
             }
         
@@ -56,6 +56,6 @@ def broyden(data):
     
     return {
         "resultado": x0.tolist(),
-        "iteraciones": iteration,
+        "iteracion": iteration,
         "mensaje": "Iteraciones agotadas sin convergencia"
     }

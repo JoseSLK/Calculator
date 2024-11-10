@@ -49,7 +49,7 @@ def secante(data):
             buf.close() 
             return {
                 "resultado": float(p),
-                "iteraciones": iteration,
+                "iteracion": iteration,
                 "grafica": img_base64
             }
        

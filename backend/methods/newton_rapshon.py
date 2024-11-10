@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from math import *
 from sympy import symbols, sympify, lambdify
+from io import BytesIO
+import base64
 
 def newton(data):
     f_str=data['function']
