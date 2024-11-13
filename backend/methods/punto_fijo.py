@@ -5,6 +5,9 @@ from io import BytesIO
 import base64
 
 def puntofijo(data):
+
+    plt.clf()
+
     n = 100  
     i = 1    
 
@@ -17,7 +20,11 @@ def puntofijo(data):
     def f(x):
         return eval(f_str)
 
-    x_vals = np.linspace(p0 - 1, p0 + 1, 400)  
+
+    x_min, x_max = -10, 10
+    num_puntos = 1000
+
+    x_vals = np.linspace(x_min, x_max, num_puntos)
     y_vals = [f(x) for x in x_vals]   
 
     iter_x_vals = [p0]        
@@ -53,6 +60,7 @@ def puntofijo(data):
             buf.seek(0)
             img_base64 = base64.b64encode(buf.read()).decode('utf-8')
             buf.close() 
+            plt.clf()
             print(f'this is p={p}')
 
             return {
@@ -69,6 +77,7 @@ def puntofijo(data):
             buf.seek(0)
             img_base64 = base64.b64encode(buf.read()).decode('utf-8')
             buf.close()
+            plt.clf()
             return {
                 "resultado": "El método parece estar divergiendo",
                 "iteracion": iteration,
@@ -83,6 +92,7 @@ def puntofijo(data):
     buf.seek(0)
     img_base64 = base64.b64encode(buf.read()).decode('utf-8')
     buf.close()  
+    plt.clf()
     return {
         "resultado": "Iteraciones agotadas, no se encontró un punto fijo",
         "grafica": img_base64
