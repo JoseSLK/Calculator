@@ -5,14 +5,32 @@ import numpy as np
 import base64
 from io import BytesIO
 from math import *
+from .decode_latex import decode_latex
+from sympy.parsing.latex import parse_latex
+from sympy import lambdify, symbols, srepr, E
 
 def biseccion(data):
 
     plt.clf()
 
-    f_str = data['function']
-    a = data['min_limit']
-    b = data['sup_limit']
+    decode_fun = decode_latex(data['function'])
+    print(f"La deco: {decode_fun}",  flush=True)
+    latex_expr = decode_fun
+
+    x = symbols('x')
+    # -x + e**(-x)
+    sympy_expr = parse_latex(latex_expr) #Asi falla
+    sympy_expr = sympy_expr.subs('e', E)
+    
+    # sympy_expr = -x + e**(-x) probando la misma funcion pero enviada directamente no falla
+
+    print(f"Expresión en formato sympy: {sympy_expr}", flush=True)
+    print(f"Representación interna de sympy_expr: {srepr(sympy_expr)}", flush=True)
+    
+    f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
+
+    a = float(data['min_limit'])
+    b = float(data['sup_limit'])
     tol = data['tolerance']
 
     n = 500
@@ -21,14 +39,17 @@ def biseccion(data):
 
     iteraciones = []
 
+    f_a = float(f(a))
+    f_b = float(f(b))
 
-    def f(x):
-        return eval(f_str)
+    print(f"Evaluación de f(a): {f_a}", flush=True)
+    print(f"Evaluación de f(b): {f_b}", flush=True)
     
-    if f(a) * f(b) > 0:
+    if f_a * f_b > 0:
         return {
             "resultado": "Error",
-            "mensaje": "No hay cambio de signo en los límites, f(a)*f(b) > 0."
+            "iteracion": None,
+            "grafica": "No hay cambio de signo en los límites, f(a)*f(b) > 0."
         }
     
     iter_x_vals = [a]      
@@ -42,7 +63,7 @@ def biseccion(data):
 
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.title(f'Grafica {f_str}')
+    plt.title(f'Grafica {sympy_expr}')
     plt.legend()
     plt.grid(True)
 
@@ -73,7 +94,7 @@ def biseccion(data):
                 "grafica": img_base64
             }
         i += 1
-        if f(a)*f(p) > 0:
+        if f(a) * f(p) > 0:
             a = p
         else:
             b = p
@@ -85,8 +106,9 @@ def biseccion(data):
     buf.close()
     plt.clf()
     return {
-        "error": "Iteraciones agotadas, no se encontró un punto fijo",
-        "grafica": img_base64
+        "resultado": "Iteraciones agotadas, no se encontró un punto fijo",
+        "iteracion": None,
+        "grafica": None
     }
 
     

@@ -6,8 +6,7 @@ export function executeRequest (id_method, data){
         case "1":
             return puntofijo(data);
         case "2":
-            apiService.biseccion(data);
-            break;
+            return biseccion(data)
         case "3":
             apiService.secante(data);
             break;
@@ -29,6 +28,19 @@ export function executeRequest (id_method, data){
             alert("Metodo no encontrado");
     }
 }
+
+function resultCute( result ){
+    const container = document.querySelector(".container_sup_t");
+    container.innerHTML = '';
+
+    //Resultado bonito
+    const resultHeader = document.createElement('h4');
+    resultHeader.classList.add("alert", "alert-primary", "text-center", "mt-3");
+    resultHeader.textContent = `El resultado es: ${result}`;
+    container.appendChild(resultHeader);
+
+    return container
+}
 async function puntofijo(data){
 
     let point = parseFloat(data.limits[0]);
@@ -40,7 +52,7 @@ async function puntofijo(data){
         initial_point: point,
         tolerance: tol
     }
-    console.log("---------")
+    console.log("--------- ANNTES")
     console.log(JSON.stringify(dataBack))
     console.log("---------")
 
@@ -49,14 +61,7 @@ async function puntofijo(data){
 
     const result = response.resultado;
 
-    const container = document.querySelector(".container_sup_t");
-    container.innerHTML = '';
-
-    //Resultado bonito
-    const resultHeader = document.createElement('h4');
-    resultHeader.classList.add("alert", "alert-primary", "text-center", "mt-3");
-    resultHeader.textContent = `El resultado es: ${result}`;
-    container.appendChild(resultHeader);
+    const container = resultCute(result)
 
     if (response.grafica){
 
@@ -70,9 +75,41 @@ async function puntofijo(data){
 
     iterationsTableFilling(response.iteracion, container)
 }
-// function biseccion(data){
+async function biseccion(data) {
 
-// }
+    let minLimit = parseFloat(data.limits[0]);
+    let supLimit = parseFloat(data.limits[1]);
+
+    let tol = parseFloat(data.tolerance);
+
+    const dataBack = {
+        function: data.equations[0],
+        min_limit: minLimit,
+        sup_limit: supLimit,
+        tolerance: tol
+    }
+
+    console.log("--------- ANTES DE ENVIAR A BACKEND")
+    console.log(JSON.stringify(dataBack))
+    console.log("---------")
+
+    const response = await apiService.biseccion(dataBack);
+    console.log(JSON.stringify(response))
+
+    const result = response.resultado;
+
+    const container = resultCute(result)
+
+    if (response.grafica) {
+        const img = document.createElement('img');
+        img.src = `data:image/png;base64,${response.grafica}`;
+        img.alt = "Resultado gráfica bisección";
+        img.style.width = '100%';
+        container.appendChild(img);
+    }
+
+    iterationsTableFilling(response.iteracion, container);
+}
 
 // function secante(data){
 

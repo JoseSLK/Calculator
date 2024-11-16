@@ -1,19 +1,8 @@
 import re
 from math import *
-
-math_functions = ['sin', 'cos', 'tan', 'sqrt', 'log', 'log10', 'exp', 'asin', 'acos', 'atan', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh', 'pi', 'e']
-
-def validate_function(f_str):
-    
-    allowed_chars = re.compile(r'^[0-9+\-*/().x\s' + ''.join(f'|{func}' for func in math_functions) + ']+$')
-    if not allowed_chars.match(f_str):
-        return False, "Contiene caracteres no permitidos o soportados"
-    
-    try:
-        eval(f_str.replace('x', '1'), {"__builtins__": None}, {func: globals()[func] for func in math_functions})
-    except Exception as e:
-        return False, f"Error en la funcion: {str(e)}"
-    return True, ""
+from sympy.parsing.latex import parse_latex
+from sympy import symbols, lambdify
+import base64
 
 #Bisection validation
 def validate_limits(a,b):

@@ -15,7 +15,7 @@ async function postRequest (endpoint, data) {
 
         return await response.json();
     } catch (error){
-        alert(`Error en la llamada del servicio: ${error.message}`)
+        alert(`Error en la llamada del servicio: ${error.message}`)//Este me retorna un mensaje Error en la llamada del servicio: Unexpected token '<', "<!doctype "... is not valid JSON
         throw error;
     }
 }

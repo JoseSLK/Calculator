@@ -1,7 +1,6 @@
 import { METHODS } from "./constants.js";
 
 function fillSelect() {
-    console.log("ayda")
     const select = document.getElementById("s_method");
     const info = Object.entries(METHODS);
 
