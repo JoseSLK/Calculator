@@ -28,3 +28,31 @@ def validate_numeric(value):
     if not isinstance(value, (int, float)):
         return False, f"El valor debe ser numérico."
     return True, ""
+
+def validate_matrix(matrix):
+    if not isinstance(matrix, list):
+        return False, "La matriz debe ser una lista."
+
+    if not all(isinstance(row, list) for row in matrix):
+        return False, "Cada fila de la matriz debe ser una lista."
+    row_length = len(matrix[0])
+
+    if not all(len(row) == row_length for row in matrix):
+        return False, "Todas las filas de la matriz deben tener la misma longitud."
+
+    for row in matrix:
+        if not all(isinstance(element, (int, float)) for element in row):
+            return False, "Todos los elementos de la matriz deben ser números."
+
+    return True, ""
+
+def validate_vector(vector):
+    if not isinstance(vector, list):
+        return False, "El vector debe ser una lista."
+
+    if not all(isinstance(element, (int, float)) for element in vector):
+        return False, "Todos los elementos del vector deben ser números."
+
+    return True, ""
+
+

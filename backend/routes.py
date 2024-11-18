@@ -4,6 +4,7 @@ from .controllers import secante_controller
 from .controllers import newton_rapshon_controller
 from .controllers import broyden_controller
 from .controllers import newton_raphson_sis_controller
+from .controllers import trapecio_controller
 
 def init_routes(app):
     app.add_url_rule('/biseccion', 'biseccion', biseccion_controller.biseccion_r, methods=['POST'])
@@ -12,4 +13,5 @@ def init_routes(app):
     app.add_url_rule('/newton', 'newton', newton_rapshon_controller.newton_raphson_r, methods=['POST'])
     app.add_url_rule('/broyden', 'broyden', broyden_controller.broyden_r, methods=['POST'])
     app.add_url_rule('/sis_newton', 'newton_sis', newton_raphson_sis_controller.newton_raphson_r, methods=['POST'])
+    app.add_url_rule('/trapecio', 'trapecio', trapecio_controller.trapecio_r, methods=['POST'])
 
