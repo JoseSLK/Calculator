@@ -3,12 +3,9 @@ import numpy as np
 
 def gauss_seidel(data):
     """
-    Método de Gauss-Seidel para resolver sistemas de ecuaciones lineales en forma despejada.
-
     Parámetros:
     data (dict): Un diccionario que contiene la matriz de coeficientes 'A' (en forma despejada),
                  el vector inicial 'x0', la tolerancia 'tol' y el número máximo de iteraciones 'max_iter'.
-
     Retorna:
     dict: Resultado que contiene la solución encontrada, las iteraciones realizadas y detalles de cada iteración.
     """
