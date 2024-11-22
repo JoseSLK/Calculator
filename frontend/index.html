@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +15,8 @@
     <script>
         var MQ = MathQuill.getInterface(2);
     </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" crossorigin="anonymous">
 
     <title>Calculadora</title>
 </head>
@@ -37,21 +40,11 @@
 
     </div>
     <div class="keyboard">
-        <button class="keyboard-button" data-value="(">(</button>
-        <button class="keyboard-button" data-value=")">)</button>
-        <button class="keyboard-button" data-value="^">^</button>
-        <button class="keyboard-button" data-value="sin(">sin</button>
-        <button class="keyboard-button" data-value="cos(">cos</button>
-        <button class="keyboard-button" data-value="tan(">tan</button>
-        <button class="keyboard-button" data-value="sqrt{4}">√</button>
-        <button class="keyboard-button" data-value="x">x</button>
-        <button class="keyboard-button" data-value="+">+</button>
-        <button class="keyboard-button" data-value="-">-</button>
-        <button class="keyboard-button" data-value="*">*</button>
-        <button class="keyboard-button" data-value="/">/</button>
+
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"></script>
     <script src="js/keyboard.js"></script>
     <script type="module" src="js/manage_n_input.js"></script>
     <script type="module" src="js/service_manage.js"></script>

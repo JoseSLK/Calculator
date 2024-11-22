@@ -2,6 +2,7 @@ import { METHODS } from "./constants.js";
 
 const MQ = MathQuill.getInterface(2);
 
+
 document.getElementById("s_method").addEventListener("change", function(){
     const id_method = document.getElementById("s_method").value
     console.log(id_method) 
@@ -91,12 +92,30 @@ document.getElementById("s_method").addEventListener("change", function(){
                     mathquillContainer.classList.add("mathquill-input", "input-equations-w", "mathquill-editable")
                     mathquillContainer.setAttribute("tabindex", "0");
         
-                    MQ.MathField(mathquillContainer, {
+                    const mathField = MQ.MathField(mathquillContainer, {
+                        handlers: {
+                            edit: () => {
+                                console.log("Edición en MathField: " + mathField.latex());
+                            }
+                        },
                         placeholder: "Escribe aquí tu ecuación"
                     });
+                    mathquillContainer.mathFieldInstance = mathField;
         
                     form_inp.appendChild(label)
                     form_inp.appendChild(mathquillContainer)
+
+                    form_inp.querySelectorAll(".mathquill-input").forEach((element, index) => {
+                        const mathField = MQ.MathField(element, {
+                            handlers: {
+                                edit: () => {
+                                    console.log("Edición en MathField: " + mathField.latex());
+                                }
+                            },
+                            placeholder: "Escribe aquí tu ecuación"
+                        });
+                        element.mathFieldInstance = mathField;
+                    });
                 }
 
                 if (numVar > 1 && numVar <= 5){
@@ -153,12 +172,30 @@ document.getElementById("s_method").addEventListener("change", function(){
             mathquillContainer.classList.add("mathquill-input", "input-equations-w", "mathquill-editable")
             mathquillContainer.setAttribute("tabindex", "0");
 
-            MQ.MathField(mathquillContainer, {
+            const mathField = MQ.MathField(mathquillContainer, {
+                handlers: {
+                    edit: () => {
+                        console.log("Edición en MathField: " + mathField.latex());
+                    }
+                },
                 placeholder: "Escribe aquí tu ecuación"
             });
+            mathquillContainer.mathFieldInstance = mathField;
 
             form_inp.appendChild(label)
             form_inp.appendChild(mathquillContainer)
+
+            form_inp.querySelectorAll(".mathquill-input").forEach((element, index) => {
+                const mathField = MQ.MathField(element, {
+                    handlers: {
+                        edit: () => {
+                            console.log("Edición en MathField: " + mathField.latex());
+                        }
+                    },
+                    placeholder: "Escribe aquí tu ecuación"
+                });
+                element.mathFieldInstance = mathField;
+            });
         }
 
         for(let j = 1; j <= methodInfo.points; j++){
@@ -181,3 +218,12 @@ document.getElementById("s_method").addEventListener("change", function(){
     }
     
 })
+
+document.addEventListener('focusin', (event) => {
+    if (event.target.classList.contains('mathquill-editable')) {
+        const mathField = event.target.mathFieldInstance;
+        if (mathField) {
+            activeMathField = mathField;
+        }
+    }
+});
