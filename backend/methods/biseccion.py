@@ -13,19 +13,21 @@ def biseccion(data):
 
     plt.clf()
 
-    decode_fun = decode_latex(data['function'])
-    print(f"La deco: {decode_fun}",  flush=True)
-    latex_expr = decode_fun
+    try:
+        decode_fun = decode_latex(data['function'])
+        latex_expr = decode_fun
 
-    x = symbols('x')
+        x = symbols('x')
+        sympy_expr = parse_latex(latex_expr)
+        sympy_expr = sympy_expr.subs('e', E)
 
-    sympy_expr = parse_latex(latex_expr)
-    sympy_expr = sympy_expr.subs('e', E)
-
-    print(f"Expresión en formato sympy: {sympy_expr}", flush=True)
-    print(f"Representación interna de sympy_expr: {srepr(sympy_expr)}", flush=True)
-    
-    f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
+        f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
+    except Exception as e:
+        return {
+            "error": f"Error al interpretar la función: {e}",
+            "iteracion": [],
+            "grafica": None
+        }
 
     a = float(data['min_limit'])
     b = float(data['sup_limit'])
@@ -45,9 +47,9 @@ def biseccion(data):
     
     if f_a * f_b > 0:
         return {
-            "resultado": "Error",
+            "resultado": "Error: No hay cambio de signo en los límites, f(a)*f(b) > 0.",
             "iteracion": None,
-            "grafica": "No hay cambio de signo en los límites, f(a)*f(b) > 0."
+            "grafica": None
         }
     
     iter_x_vals = [a]      
@@ -105,8 +107,8 @@ def biseccion(data):
     plt.clf()
     return {
         "resultado": "Iteraciones agotadas, no se encontró un punto fijo",
-        "iteracion": None,
-        "grafica": None
+        "iteracion": iteraciones,
+        "grafica": img_base64
     }
 
     

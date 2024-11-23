@@ -6,10 +6,9 @@ export function executeRequest (id_method, data){
         case "1":
             return puntofijo(data);
         case "2":
-            return biseccion(data)
+            return biseccion(data);
         case "3":
-            apiService.secante(data);
-            break;
+            return secante(data);
         case "4":
             apiService.newtonRaphson(data);
             break;
@@ -111,17 +110,51 @@ async function biseccion(data) {
     iterationsTableFilling(response.iteracion, container);
 }
 
-// function secante(data){
+async function secante(data){
+
+    let minLimit = parseFloat(data.limits[0]);
+    let supLimit = parseFloat(data.limits[1]);
+
+    let tol = parseFloat(data.tolerance);
+
+    const dataBack = {
+        function: data.equations[0],
+        initial_point_a: minLimit,
+        initial_point_b: supLimit,
+        tolerance: tol
+    }
+
+    let container;
+    try{
+        const response = await apiService.secante(dataBack);
+        const result = response.resultado;
+        const container = resultCute(result);
+
+        if(response.grafica){
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${response.grafica}`;
+            img.alt = "Resultado grafica secante";
+            img.style.width = '100%';
+            container.appendChild(img);
+        }
+
+        iterationsTableFilling(response.iteracion, container);
+        
+    } catch (error){
+        resultCute("Hubo un error al calcular la solucion usando el metodo secante")
+    }
+    
+    
+
+}
+// async function newtonRaphson (data){
 
 // }
-// function newtonRaphson (data){
+
+// async function broyden(data){
 
 // }
 
-// function broyden(data){
-
-// }
-
-// function newtonRaphsonSis(data){
+// async function newtonRaphsonSis(data){
 
 // }
