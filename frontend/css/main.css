@@ -11,8 +11,7 @@ html, body {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-    height: calc(100vh - 60px);
-    margin-bottom: 0;
+    height: calc(100vh - 176px);
 }
 .container_main > div {
     flex: 1;
