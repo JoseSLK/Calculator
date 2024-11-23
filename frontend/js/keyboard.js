@@ -51,13 +51,12 @@
     document.addEventListener('focusin', (event) => {
         const targetElement = event.target;
         
-        // Buscar el contenedor más cercano con la clase "mathquill-editable"
         const mathFieldContainer = targetElement.closest('.mathquill-editable');
         
         if (mathFieldContainer) {
             const mathField = mathFieldContainer.mathFieldInstance;
             if (mathField) {
-                activeMathField = mathField; // Guardar el mathFieldInstance en la variable global
+                activeMathField = mathField;
                 console.log("Campo MathQuill activo:", mathField.latex());
             } else {
                 console.error("mathFieldInstance no encontrado en el contenedor MathQuill.");
@@ -71,7 +70,7 @@
     // Cargar el teclado en el contenedor
     function loadKeyboard() {
         const keyboardContainer = document.querySelector('.keyboard');
-        keyboardContainer.innerHTML = '';  // Limpiar el contenedor
+        keyboardContainer.innerHTML = '';
         console.log("Cargando teclado...");
 
         // Crear las filas del teclado
@@ -84,7 +83,6 @@
                 keyButton.classList.add('keyboard-key', 'btn', 'btn-light');
 
                 if (key.key === "del") {
-                    // Manejo especial para la tecla "del"
                     keyButton.innerHTML = `<img src="${key.print_value}" alt="Backspace"/>`;
                 } else {
                     const katexSpan = document.createElement('span');
@@ -94,8 +92,8 @@
 
                 // Agregar evento de clic para insertar el valor
                 keyButton.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevenir que el botón robe el foco
-                    event.stopPropagation(); // Detener otros eventos propagados
+                    event.preventDefault();
+                    event.stopPropagation();
                     handleKeyPress(key.print_value);
                 });
                 rowDiv.appendChild(keyButton);
@@ -124,8 +122,6 @@
             console.log("No hay un campo MathQuill activo para escribir");
         }
     }
-    
-
 
     // Iniciar el teclado al cargar el documento
     document.addEventListener("DOMContentLoaded", loadKeyboard);

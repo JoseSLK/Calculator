@@ -1,6 +1,5 @@
-import { symbolMap, METHODS} from "./constants.js";
 import { executeRequest } from "./service/mainControl.js";
-import { validateFunction, validateLimits, validateTolerance, validateNumeric} from "./validation.js";
+import {validateLimits, validateTolerance, validateNumeric} from "./validation.js";
 
 document.getElementById("submit-data").addEventListener("click", function(){
     const form_eq = document.getElementById("equation_form");

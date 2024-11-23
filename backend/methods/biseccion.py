@@ -18,11 +18,9 @@ def biseccion(data):
     latex_expr = decode_fun
 
     x = symbols('x')
-    # -x + e**(-x)
-    sympy_expr = parse_latex(latex_expr) #Asi falla
+
+    sympy_expr = parse_latex(latex_expr)
     sympy_expr = sympy_expr.subs('e', E)
-    
-    # sympy_expr = -x + e**(-x) probando la misma funcion pero enviada directamente no falla
 
     print(f"Expresión en formato sympy: {sympy_expr}", flush=True)
     print(f"Representación interna de sympy_expr: {srepr(sympy_expr)}", flush=True)
