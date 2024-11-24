@@ -3,25 +3,38 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 from math import *
-from sympy import symbols, sympify, lambdify
+from sympy import symbols, sympify, lambdify, srepr, E
+from sympy.parsing.latex import parse_latex
 from io import BytesIO
 import base64
+from .decode_latex import decode_latex
 
 def newton(data):
 
     plt.clf()
 
-    f_str=data['function']
-    x = symbols('x')
-    f = sympify(f_str)
-    f_lambda = lambdify(x, f)
-    fprima=data['fprima']
-    xp = symbols('x')
-    fp = sympify(fprima)
+    try:
+        decode_fun = decode_latex(data['function'])
+        x = symbols('x')
+        sympy_expr = parse_latex(decode_fun)
+        sympy_expr = sympy_expr.subs('e', E)
+        f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
+
+        decode_pri = decode_latex(data['fprima'])
+        xp = symbols('x')
+        sympy_expr2 = parse_latex(decode_pri)
+        sympy_expr2 = sympy_expr2.subs('e', E)
+        f_prima = lambdify(xp, sympy_expr2,  modules=["numpy", "sympy"])
+
+    except Exception as e:
+        return{
+            "error": f"Error al interpretar la función, por favor digita una funcion valida",
+            "iteracion": [],
+            "grafica": None 
+        }
+    
     iteration = [] 
     
-
-    f_prima = lambdify(xp, fp)
     p0=data['p0']
     tol=data['tolerance']
     n=500
@@ -43,23 +56,22 @@ def newton(data):
 
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.title(f'Grafica {f_str}')
+    plt.title(f'Grafica {sympy_expr}')
     plt.legend()
     plt.grid(True)
 
     while i <= n:
-        p = p0- f_lambda(p0)/f_prima(p0)
+        p = p0- f(p0)/f_prima(p0)
         iter_x_vals.append(p)
         iteration.append({
             "iteracion": i + 1,
-            "x": float(p)
+            "x": float(p),
+            "error": ( p - p0 )
         })
-        print("Iter = {0:<2}, p = {1:.12f}".format(i, p))
 
         if abs(p- p0) < tol:
             for x_value in iter_x_vals:
                 plt.axvline(x=x_value, color='r', linestyle='--')
-                print(f"x = {x_value}")
 
             buf = BytesIO()
             plt.savefig(buf, format='png', dpi=300)
@@ -70,7 +82,7 @@ def newton(data):
 
             return {
                 "resultado": float(p),
-                "iteraciones": iteration,
+                "iteracion": iteration,
                 "grafica": img_base64
             }
         p0 = p
@@ -83,7 +95,7 @@ def newton(data):
     buf.close() 
     plt.clf()
     return {
-        "error": "Iteraciones agotadas, no se encontró un punto fijo",
+        "resultado": "Iteraciones agotadas, no se encontró un punto fijo",
+        "iteracion":iteration,
         "grafica": img_base64
     }
-# f, fprima, p0, tol, n

@@ -10,7 +10,7 @@ export function executeRequest (id_method, data){
         case "3":
             return secante(data);
         case "4":
-            apiService.newtonRaphson(data);
+            newtonRaphson(data);
             break;
         case "5":
             apiService.broyden(data);
@@ -124,7 +124,6 @@ async function secante(data){
         tolerance: tol
     }
 
-    let container;
     try{
         const response = await apiService.secante(dataBack);
         const result = response.resultado;
@@ -143,13 +142,39 @@ async function secante(data){
     } catch (error){
         resultCute("Hubo un error al calcular la solucion usando el metodo secante")
     }
-    
-    
-
 }
-// async function newtonRaphson (data){
+async function newtonRaphson (data){
 
-// }
+    let limit = parseFloat(data.limits[0])
+
+    let tol = parseFloat(data.tolerance);
+
+    const dataBack = {
+        function: data.equations[0],
+        fprima: data.equations[1],
+        p0: limit,
+        tolerance: tol
+    }
+
+    try{
+        const response = await apiService.newtonRaphson(dataBack);
+        const result = response.resultado;
+        const container = resultCute(result)
+
+        if(response.grafica){
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${response.grafica}`;
+            img.alt = "Resultado grafica secante";
+            img.style.width = '100%';
+            container.appendChild(img);
+        }
+
+        iterationsTableFilling(response.iteracion, container);
+
+    }catch (error) {
+        resultCute("Hubo un error al calcular la solucion usando el metodo Newton Raphson")
+    } 
+}
 
 // async function broyden(data){
 
