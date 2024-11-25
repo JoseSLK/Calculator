@@ -1,4 +1,4 @@
-export async function iterationsTableFilling(iterations, container) {
+export async function iterationsTableFilling(iterations, container, includeFx = false) {
     if(iterations && iterations.length > 0) {
         const table = document.createElement('table');
         table.className = "table table-striped mt-3";
@@ -9,6 +9,7 @@ export async function iterationsTableFilling(iterations, container) {
                 <th>Iteración</th>
                 <th>x</th>
                 <th>Error</th>
+                ${includeFx ? '<th>f(x)</th>' : ''}
             </tr>
         `;
         table.appendChild(header);
@@ -20,6 +21,7 @@ export async function iterationsTableFilling(iterations, container) {
                 <td>${iter.iteracion}</td>
                 <td>${iter.x}</td>
                 <td>${iter.error}</td>
+                ${includeFx ? `<td>${Array.isArray(iter['f(x)']) ? iter['f(x)'].join(', ') : iter['f(x)']}</td>` : ''}
             `;
             body.appendChild(row);
         });

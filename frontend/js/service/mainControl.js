@@ -10,11 +10,9 @@ export function executeRequest (id_method, data){
         case "3":
             return secante(data);
         case "4":
-            newtonRaphson(data);
-            break;
+            return newtonRaphson(data);
         case "5":
-            apiService.broyden(data);
-            break;
+            return broyden(data);
         case "6":
             apiService.newtonRaphsonSis(data);
         case "7":
@@ -176,9 +174,30 @@ async function newtonRaphson (data){
     } 
 }
 
-// async function broyden(data){
+async function broyden(data){
+    let tol = parseFloat(data.tolerance);
 
-// }
+    const dataBack = {
+        function: data.equations,
+        initial_point: data.limits,
+        tolerance: tol
+    }
+    console.log("Esto va al back")
+    console.log(dataBack)
+
+    try{
+        const response = await apiService.broyden(dataBack);
+        console.log(response.mensaje);
+        const result = response.resultado;
+        const container = resultCute(result);
+
+        iterationsTableFilling(response.iteracion, container, true);
+    }catch (error) {
+
+        resultCute("Hubo un error al calcular la solucion usando el metodo Broyden");
+        
+    }
+}
 
 // async function newtonRaphsonSis(data){
 
