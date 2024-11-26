@@ -12,6 +12,8 @@ def simpson(data):
     Retorna:
     dict: Un resultado que contiene el área calculada, los detalles de cada iteración y un mensaje.
     """
+    plt.clf()
+
     fx = data['function']  # Función para evaluar
     a = data['a']  # Límite inferior de integración
     b = data['b']  # Límite superior de integración
@@ -28,6 +30,23 @@ def simpson(data):
     suma = fx(xi)
     iteration = []
 
+    x_min, x_max = -10, 10
+    num_puntos = 1000
+
+    x_vals = np.linspace(x_min, x_max, num_puntos)
+    y_vals = [fx(x) for x in x_vals] 
+
+    plt.plot(x_vals, y_vals, label='f(x)', color='blue', linewidth=2)
+
+    x1_vals = [a + i * h for i in range(tramos + 1)]
+    y1_vals = [fx(x) for x in x1_vals]
+
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.title(f'Grafica {fx}')
+    plt.legend()
+    plt.grid(True)
+
     for i in range(1, tramos):
         xi += h
         coeficiente = 4 if i % 2 != 0 else 2  # Alterna entre 4 y 2
@@ -39,8 +58,25 @@ def simpson(data):
             "coeficiente": coeficiente
         })
 
+        if i % 2 == 1: 
+            x_fill = [x1_vals[i - 1], x1_vals[i], x1_vals[i + 1]]
+            y_fill = [fx(x) for x in x_fill]
+            x_interp = np.linspace(x1_vals[i - 1], x1_vals[i + 1], 100)
+            y_interp = np.interp(x_interp, x_fill, y_fill)
+            plt.fill_between(x_interp, y_interp, color='orange', alpha=0.3)
+
     suma += fx(b)
     area = h * (suma / 3)
+
+    plt.scatter(x1_vals, y1_vals, color='red')
+
+    buf = BytesIO()
+    plt.savefig(buf, format='png', dpi=300)
+    buf.seek(0)
+    img_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    buf.close() 
+    plt.clf() 
+    
 
     return {
         "resultado": area,
