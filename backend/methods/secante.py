@@ -51,7 +51,7 @@ def secante(data):
 
     while i <= n:
 
-        if abs(f(p1) - f(p0)) < 1e-12:
+        if abs(f(p1) - f(p0)) < 1e-20:
             buf = BytesIO()
             plt.savefig(buf, format='png', dpi=300)
             buf.seek(0)

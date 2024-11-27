@@ -71,25 +71,97 @@ document.getElementById("s_method").addEventListener("change", function(){
         function updateFields() {
             const numEquations = parseInt(input_ne.value, 10);
             let numVar = 0;
-
+        
             if (id_method === "5" || id_method === "6") {
                 numVar = parseInt(input_var.value, 10);
-            } else if (id_method === "7" || id_method === "8") {
-                numVar = numEquations;
             }
 
             form_eq.querySelectorAll(".dynamic-fields").forEach(el => el.remove());
-            if (numEquations > 1 && numEquations <= 8){ 
-                const form_inp = document.createElement("div");
-                form_inp.classList.add("dynamic-fields");
+        
+            const form_inp = document.createElement("div");
+            form_inp.classList.add("dynamic-fields");
+        
+            // Lógica para Jacobi o Gauss-Seidel
+            if (id_method === "7" || id_method === "8") {
+                if (numEquations > 1 && numEquations <= 8) {
 
-                for(let i = 1; i <= numEquations; i++){
+                    //ME FALTA CREAR LOS INPUTS PARA EL VECTOR INICIAL, ayudame a crearlo, teniendo en cuenta que este depende de numEcuations,
+                    //Ya sabes, solo implementar, no borrar nada. la entrada del vector inicial debe ser x1 = input, xn = input
+
+                    for (let i = 1; i <= numEquations; i++) {
+                        const row = document.createElement("div");
+                        row.classList.add("matrix-row");
+        
+                        // Crear entradas para coeficientes
+                        for (let j = 1; j <= numEquations; j++) {
+                            const label = document.createElement("label");
+                            label.textContent = `x${j}`;
+                            label.classList.add("form-label", "label-coeff");
+        
+                            const input = document.createElement("input");
+                            input.type = "number";
+                            input.name = `coef_${i}_${j}`;
+                            input.required = true;
+                            input.classList.add("form-control", "input-coeff");
+                            
+                            row.appendChild(input);
+                            row.appendChild(label);
+                        }
+        
+                        // Entrada para el término independiente
+                        const labelIndependent = document.createElement("label");
+                        labelIndependent.textContent = `=`;
+                        labelIndependent.classList.add("form-label", "label-independent");
+        
+                        const inputIndependent = document.createElement("input");
+                        inputIndependent.type = "number";
+                        inputIndependent.name = `independent_${i}`;
+                        inputIndependent.required = true;
+                        inputIndependent.classList.add("form-control", "input-independent");
+        
+                        row.appendChild(labelIndependent);
+                        row.appendChild(inputIndependent);
+                        let hr = document.createElement('hr')
+        
+                        form_inp.appendChild(row);
+                        form_inp.appendChild(hr);
+                    }
+
+                    // Crear entradas para el vector inicial
+                    const initialVectorContainer = document.createElement("div");
+                    initialVectorContainer.classList.add("initial-vector");
+
+                    const vectorLabel = document.createElement("label");
+                    vectorLabel.textContent = "Vector inicial:";
+                    vectorLabel.classList.add("form-label", "label-vector");
+                    initialVectorContainer.appendChild(vectorLabel);
+
+                    for (let k = 1; k <= numEquations; k++) {
+                        const vectorInputLabel = document.createElement("label");
+                        vectorInputLabel.textContent = `x${k}`;
+                        vectorInputLabel.classList.add("form-label", "label-vector-input");
+
+                        const vectorInput = document.createElement("input");
+                        vectorInput.type = "number";
+                        vectorInput.name = `initial_vector_${k}`;
+                        vectorInput.required = true;
+                        vectorInput.classList.add("form-control", "input-vector");
+
+                        initialVectorContainer.appendChild(vectorInputLabel);
+                        initialVectorContainer.appendChild(vectorInput);
+                    }
+                    form_inp.appendChild(initialVectorContainer);
+                }
+            } 
+            // Lógica para otros métodos (id_method === "5" || id_method === "6")
+            else if (numEquations > 1 && numEquations <= 8) {
+                for (let i = 1; i <= numEquations; i++) {
                     const label = document.createElement("label");
                     label.textContent = `Ecuacion ${i}`;
                     label.classList.add("form-label", "label-eq");
         
                     const mathquillContainer = document.createElement("span");
-                    mathquillContainer.classList.add("mathquill-input", "input-equations-w", "mathquill-editable")
+                    mathquillContainer.classList.add("mathquill-input", "input-equations-w", "mathquill-editable");
                     mathquillContainer.setAttribute("tabindex", "0");
         
                     const mathField = MQ.MathField(mathquillContainer, {
@@ -102,44 +174,34 @@ document.getElementById("s_method").addEventListener("change", function(){
                     });
                     mathquillContainer.mathFieldInstance = mathField;
         
-                    form_inp.appendChild(label)
-                    form_inp.appendChild(mathquillContainer)
-
-                    form_inp.querySelectorAll(".mathquill-input").forEach((element, index) => {
-                        const mathField = MQ.MathField(element, {
-                            handlers: {
-                                edit: () => {
-                                    console.log("Edición en MathField: " + mathField.latex());
-                                }
-                            },
-                            placeholder: "Escribe aquí tu ecuación"
-                        });
-                        element.mathFieldInstance = mathField;
-                    });
+                    form_inp.appendChild(label);
+                    form_inp.appendChild(mathquillContainer);
                 }
-
-                if (numVar > 1 && numVar <= 5){
-                        for(let j = 1; j <= numVar; j++){
+        
+                if (numVar > 1 && numVar <= 5) {
+                    for (let j = 1; j <= numVar; j++) {
                         const input_Li = document.createElement("input");
                         const label_li = document.createElement("label");
-            
+        
                         label_li.textContent = `Var ${j} punto inicial`;
                         label_li.classList.add("form-label", "label-eq");
-            
+        
                         input_Li.type = "number";
-                        input_Li.name = `limit${j}`
+                        input_Li.name = `limit${j}`;
                         input_Li.required = true;
                         input_Li.classList.add("form-control", "input-limits");
-            
+        
                         form_inp.appendChild(label_li);
                         form_inp.appendChild(input_Li);
                     }
                 }
-                
-
+            }
+        
+            if (form_inp.childElementCount > 0) {
                 form_eq.appendChild(form_inp);
             }
         }
+        
 
         input_ne.addEventListener("input", updateFields);
         if (id_method === "5" || id_method === "6") {
