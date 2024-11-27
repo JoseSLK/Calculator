@@ -87,5 +87,6 @@ def simpson(data):
     return {
         "resultado": area,
         "iteracion": iteration,
-        "mensaje": "Cálculo de la integral completado con éxito usando la Regla de Simpson 1/3"
+        "mensaje": "Cálculo de la integral completado con éxito usando la Regla de Simpson 1/3",
+        "image": img_base64
     }
