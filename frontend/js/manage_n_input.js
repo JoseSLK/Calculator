@@ -85,9 +85,6 @@ document.getElementById("s_method").addEventListener("change", function(){
             if (id_method === "7" || id_method === "8") {
                 if (numEquations > 1 && numEquations <= 8) {
 
-                    //ME FALTA CREAR LOS INPUTS PARA EL VECTOR INICIAL, ayudame a crearlo, teniendo en cuenta que este depende de numEcuations,
-                    //Ya sabes, solo implementar, no borrar nada. la entrada del vector inicial debe ser x1 = input, xn = input
-
                     for (let i = 1; i <= numEquations; i++) {
                         const row = document.createElement("div");
                         row.classList.add("matrix-row");
