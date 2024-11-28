@@ -1,38 +1,40 @@
 from flask import request, jsonify
-from .validation import validate_matrix, validate_vector, validate_tolerance, validate_max_iterations
 from ..methods.Gauss_Seidel import gauss_seidel
-
 
 def gauss_seidel_r():
     """
-    Recibe una solicitud JSON con los datos necesarios, valida la entrada y ejecuta el método de Gauss-Seidel.
+    Recibe una solicitud JSON con los datos necesarios, valida la entrada básica y ejecuta el método de Gauss-Seidel.
     """
     data = request.json
 
-    # # Validación de la matriz de coeficientes A (despejada)
-    # valid, error_message = validate_matrix(data.get('A'))
-    # if not valid:
-    #     return jsonify({"error": f"Matriz A (despejada): {error_message}"}), 400
+    # Validaciones mínimas para asegurar que los datos básicos existen
+    if 'function' not in data or not isinstance(data['function'], list):
+        return jsonify({"error": "La matriz de coeficientes (function) es obligatoria y debe ser una lista"}), 400
 
-    # # Validación del vector inicial x0
-    # valid, error_message = validate_vector(data.get('x0'))
-    # if not valid:
-    #     return jsonify({"error": f"Vector inicial x0: {error_message}"}), 400
+    if 'x0' not in data or not isinstance(data['x0'], list):
+        return jsonify({"error": "El vector inicial (x0) es obligatorio y debe ser una lista"}), 400
 
-    # # Validación de la tolerancia
-    # tol = data.get('tol', 1e-6)  # Valor por defecto si no se proporciona
-    # valid, error_message = validate_tolerance(tol)
-    # if not valid:
-    #     return jsonify({"error": f"Tolerancia: {error_message}"}), 400
-    # data['tol'] = tol  # Actualizar el valor validado
+    # Tolerancia opcional con valor por defecto
+    if 'tol' in data:
+        try:
+            data['tol'] = float(data['tol'])
+        except ValueError:
+            return jsonify({"error": "La tolerancia (tol) debe ser un número válido"}), 400
+    else:
+        data['tol'] = 1e-6  # Valor por defecto
 
-    # # Validación del número máximo de iteraciones
-    # max_iter = data.get('max_iter', 1000)  # Valor por defecto si no se proporciona
-    # valid, error_message = validate_max_iterations(max_iter)
-    # if not valid:
-    #     return jsonify({"error": f"Número máximo de iteraciones: {error_message}"}), 400
-    # data['max_iter'] = max_iter  # Actualizar el valor validado
+    # Número máximo de iteraciones opcional
+    if 'max_iter' in data:
+        try:
+            data['max_iter'] = int(data['max_iter'])
+        except ValueError:
+            return jsonify({"error": "El número máximo de iteraciones (max_iter) debe ser un entero válido"}), 400
+    else:
+        data['max_iter'] = 300  # Valor por defecto
 
-    # Ejecución del método Gauss-Seidel
-    result = gauss_seidel(data)
-    return jsonify(result)
+    # Ejecutar el método Gauss-Seidel
+    try:
+        result = gauss_seidel(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": f"Error al ejecutar el método de Gauss-Seidel: {str(e)}"}), 500
