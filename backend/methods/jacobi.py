@@ -13,8 +13,8 @@ def jacobi(data):
     """
     A = np.array(data['function'], dtype=float)  # Matriz de coeficientes
     x0 = np.array(data['x0'], dtype=float)  # Vector inicial
-    tol = data.get('tol', 1e-6)  # Tolerancia para el criterio de parada
-    max_iter = data.get('max_iter', 1000)  # Número máximo de iteraciones
+    tol = data.get('tolerance', 1e-6)  # Tolerancia para el criterio de parada
+    max_iter = 300  # Número máximo de iteraciones
 
     n = len(A)
     x = x0.copy()
@@ -50,18 +50,18 @@ def jacobi(data):
         "iteracion": iteration,
         "mensaje": "Iteraciones agotadas sin convergencia"
     }
-if __name__ == "__main__":
-    data = {
-        'function': [
-            [0, 0.25, 0.25, 10], 
-            [0.2, 0, 0.2, 5],  
-            [0.1, 0.1, 0, 8]   
-        ],
-        'x0': [0, 0, 0],  # Vector inicial
-        'tol': 1e-6,
-        'max_iter': 200
-    }
-    result = jacobi(data)
-    print(result)
+# if __name__ == "__main__":
+#     data = {
+#         'function': [
+#             [0, 0.25, 0.25, 10], 
+#             [0.2, 0, 0.2, 5],  
+#             [0.1, 0.1, 0, 8]   
+#         ],
+#         'x0': [0, 0, 0],  # Vector inicial
+#         'tol': 1e-6,
+#         'max_iter': 200
+#     }
+#     result = jacobi(data)
+#     print(result)
 
 

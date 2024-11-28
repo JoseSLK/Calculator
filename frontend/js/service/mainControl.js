@@ -14,13 +14,14 @@ export function executeRequest (id_method, data){
         case "5":
             return broyden(data);
         case "6":
-            apiService.newtonRaphsonSis(data);
+            // apiService.newtonRaphsonSis(data);
+            alert("Este metodo estara disponible en proximas versiones")
         case "7":
             console.log("Jacobi");
-            break;
+            return jacobi(data);
         case "8":
             console.log("Gauss seidel");
-            break;
+            return gauss_seidel(data);
         default:
             alert("Metodo no encontrado");
     }
@@ -202,3 +203,47 @@ async function broyden(data){
 // async function newtonRaphsonSis(data){
 
 // }
+async function jacobi(data){
+    let tol = parseFloat(data.tolerance);
+
+    const dataBack = {
+        function: data.function,
+        x0: data.x0,
+        tolerance: tol
+    }
+
+    try{
+        const response = await apiService.jacobi(dataBack);
+        const result = response.resultado;
+        const container = resultCute(result);
+        alert(response.mensaje)
+
+        iterationsTableFilling(response.iteracion, container)
+    }catch (error) {
+        resultCute("Hubo un error al calcular la solucion usando el metodo JACOBI")
+    }
+    
+}
+
+async function gauss_seidel(data){
+    let tol = parseFloat(data.tolerance);
+
+    const dataBack = {
+        function: data.function,
+        x0: data.x0,
+        tolerance: tol
+    }
+
+    try{
+        const response = await apiService.gauss_seidel(dataBack);
+        const result = response.resultado;
+        const container = resultCute(result);
+        alert(response.mensaje)
+
+        iterationsTableFilling(response.iteracion, container)
+    }catch (error) {
+        resultCute("Hubo un error al calcular la solucion usando el metodo JACOBI")
+    }
+    
+}
+
