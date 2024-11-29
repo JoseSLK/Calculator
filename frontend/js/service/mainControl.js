@@ -1,5 +1,5 @@
 import { apiService } from "./apiService.js";
-import { iterationsTableFilling } from "../result_table.js"
+import { iterationsTableFilling, iterationsTableSimpsonTrapecios } from "../result_table.js"
 
 export function executeRequest (id_method, data){
     switch (id_method) {
@@ -17,11 +17,14 @@ export function executeRequest (id_method, data){
             // apiService.newtonRaphsonSis(data);
             alert("Este metodo estara disponible en proximas versiones")
         case "7":
-            console.log("Jacobi");
             return jacobi(data);
         case "8":
-            console.log("Gauss seidel");
             return gauss_seidel(data);
+        case "9":
+            return trapecios(data);
+        case "10":
+            return simpson(data);
+                
         default:
             alert("Metodo no encontrado");
     }
@@ -209,7 +212,8 @@ async function jacobi(data){
     const dataBack = {
         function: data.function,
         x0: data.x0,
-        tolerance: tol
+        tolerance: tol,
+        max_iter: data.max_iter
     }
 
     try{
@@ -231,7 +235,8 @@ async function gauss_seidel(data){
     const dataBack = {
         function: data.function,
         x0: data.x0,
-        tolerance: tol
+        tol: tol,
+        max_iter: data.max_iter
     }
 
     try{
@@ -245,5 +250,59 @@ async function gauss_seidel(data){
         resultCute("Hubo un error al calcular la solucion usando el metodo JACOBI")
     }
     
+}
+
+async function trapecios(data){
+
+    let a = parseFloat(data.limits[0]);
+    let b = parseFloat(data.limits[1]);
+    let tramos = parseFloat(data.limits[2]);
+
+    const dataBack = {
+        function: data.equations,
+        a: a,
+        b: b,
+        tramos: tramos
+    }
+
+    // try {
+    //     // const response = await apiService.trapecios(dataBack);
+    //     // const
+    
+    // }
+}
+async function simpson(data){
+    let a = parseFloat(data.limits[0]);
+    let b = parseFloat(data.limits[1]);
+    let tramos = parseFloat(data.limits[2]);
+
+    const dataBack = {
+        function: data.equations[0],
+        a: a,
+        b: b,
+        tramos: tramos
+    }
+    console.log(dataBack)
+
+    try {
+        const response = await apiService.simpson(dataBack);
+        const result = response.resultado;
+        const container = resultCute(result);
+
+        if(response.grafica){
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${response.grafica}`;
+            img.alt = "Resultado grafica secante";
+            img.style.width = '100%';
+            container.appendChild(img);
+        }
+
+        alert(response.mensaje)
+
+        iterationsTableSimpsonTrapecios(response.iteracion, container);
+
+    }catch (error) {
+        resultCute("Hubo un error al calcular el resultado con el metodo de SIMPSON")
+    }
 }
 

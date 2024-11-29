@@ -13,17 +13,23 @@ def puntofijo(data):
 
     n = 100  
     i = 1    
-
-    decode_fun = decode_latex(data['function'])
-    print(f"La deco: {decode_fun}")
-    latex_expr = decode_fun
-    
-    sympy_expr = parse_latex(latex_expr)
-    sympy_expr = sympy_expr.subs('e', E)
-    
-    print(f"parse: {sympy_expr}")
-    x = symbols('x')
-    f = lambdify(x, sympy_expr, modules=["numpy", "sympy"]) 
+    try:
+        decode_fun = decode_latex(data['function'])
+        print(f"La deco: {decode_fun}")
+        latex_expr = decode_fun
+        
+        sympy_expr = parse_latex(latex_expr)
+        sympy_expr = sympy_expr.subs('e', E)
+        
+        print(f"parse: {sympy_expr}")
+        x = symbols('x')
+        f = lambdify(x, sympy_expr, modules=["numpy", "sympy"]) 
+    except Exception as a:
+        return {
+            "resultado": f"Error al interpretar la función, por favor digita una funcion valida",
+            "iteracion": [],
+            "grafica": None
+        }
 
     p0 = data['initial_point'] 
     tol = data['tolerance']    

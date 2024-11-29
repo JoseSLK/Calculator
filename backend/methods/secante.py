@@ -24,7 +24,7 @@ def secante(data):
         f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
     except Exception as e:
         return {
-            "error": f"Error al interpretar la función, por favor digita una funcion valida",
+            "resultado": f"Error al interpretar la función, por favor digita una funcion valida",
             "iteracion": [],
             "grafica": None
         }

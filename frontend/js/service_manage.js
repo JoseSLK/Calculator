@@ -6,21 +6,23 @@ document.getElementById("submit-data").addEventListener("click", function(){
     const selectValue = document.getElementById("s_method").value;
     const equations = [];
     const limits = [];
-    let tolerance = 0;
     let hasError = false;
     
-    tolerance = document.getElementById("tolerance").value;
-    if (tolerance){
-        console.log(`par=${parseFloat(tolerance)}`)
-        const {isValid: isToleranceValid, message: toleranceMessage} = validateTolerance(parseFloat(tolerance));
-        if(!isToleranceValid){
-            alert(`Error en la toleracia: ${toleranceMessage}`);
+    if(selectValue !== "9" && selectValue !== "10"){
+        let tolerance = 0;
+        tolerance = document.getElementById("tolerance").value;
+        if (tolerance){
+            console.log(`par=${parseFloat(tolerance)}`)
+            const {isValid: isToleranceValid, message: toleranceMessage} = validateTolerance(parseFloat(tolerance));
+            if(!isToleranceValid){
+                alert(`Error en la toleracia: ${toleranceMessage}`);
+                hasError = true;
+                return;
+            }  
+        }else {
+            alert("La tolerancia es un campo obligatorio.");
             hasError = true;
-            return;
-        }  
-    }else {
-        alert("La tolerancia es un campo obligatorio.");
-        hasError = true;
+        }
     }
     
     if(selectValue === "7" || selectValue === "8"){
@@ -94,6 +96,13 @@ document.getElementById("submit-data").addEventListener("click", function(){
             }
         }
 
+        const iteration = document.getElementById("iterations").value;
+        if (!iteration){
+            alert("Debes llenar el numero de iteraciones")
+            hasError = true;
+            return;
+        }
+
         if (hasError) {
             return;
         }
@@ -102,7 +111,8 @@ document.getElementById("submit-data").addEventListener("click", function(){
         const formData = {
             function: matrix,
             x0: initialVector,
-            tolerance: parseFloat(tolerance)
+            tolerance: parseFloat(tolerance),
+            max_iter: parseFloat(iteration)
         };
 
         console.log("Datos enviados:", JSON.stringify(formData));
@@ -141,11 +151,20 @@ document.getElementById("submit-data").addEventListener("click", function(){
             return;
         }
 
-        const formData = {
-            equations: equations,
-            limits: limits,
-            tolerance: tolerance
-        };
+        let formData;
+
+        if(selectValue !== "9" && selectValue !== "10"){
+            formData = {
+                equations: equations,
+                limits: limits,
+                tolerance: tolerance
+            };
+        }else{
+            formData = {
+                equations: equations,
+                limits: limits,
+            }; 
+        }
 
         console.log(JSON.stringify(formData));
         executeRequest(selectValue,formData);

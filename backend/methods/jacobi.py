@@ -14,7 +14,7 @@ def jacobi(data):
     A = np.array(data['function'], dtype=float)  # Matriz de coeficientes
     x0 = np.array(data['x0'], dtype=float)  # Vector inicial
     tol = data.get('tolerance', 1e-6)  # Tolerancia para el criterio de parada
-    max_iter = 300  # Número máximo de iteraciones
+    max_iter = data.get('max_iter', 1000)  # Número máximo de iteraciones
 
     n = len(A)
     x = x0.copy()

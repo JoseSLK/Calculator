@@ -1,4 +1,4 @@
-import { METHODS } from "./constants.js";
+import { METHODS, NAMEPOINT } from "./constants.js";
 
 const MQ = MathQuill.getInterface(2);
 
@@ -148,6 +148,23 @@ document.getElementById("s_method").addEventListener("change", function(){
                         initialVectorContainer.appendChild(vectorInput);
                     }
                     form_inp.appendChild(initialVectorContainer);
+
+                    //Numero de iteraciones que quiere el usuario
+                    const iteration_label = document.createElement("label");
+                    iteration_label.textContent = "Numero de iteraciones:";
+                    iteration_label.classList.add("form-label");
+
+                    const iteration = document.createElement("input")
+                    iteration.type = "number";
+                    iteration.name = `iterations`;
+                    iteration.id = "iterations";
+                    iteration.required = true;
+                    iteration.classList.add("form-control", "input-vector");
+
+                    let hr = document.createElement('hr')
+                    form_inp.appendChild(hr);
+                    form_inp.appendChild(iteration_label);
+                    form_inp.appendChild(iteration);
                 }
             } 
             // Lógica para otros métodos (id_method === "5" || id_method === "6")
@@ -208,19 +225,21 @@ document.getElementById("s_method").addEventListener("change", function(){
 
         const form_inp = document.createElement("div");
 
-        const tolerance_label = document.createElement("label");
-        tolerance_label.textContent = "Tolerancia (%Error)";
-        tolerance_label.classList.add("form-label", "label-eq");
+        if(id_method !== "9" && id_method !== "10"){
+            const tolerance_label = document.createElement("label");
+            tolerance_label.textContent = "Tolerancia (%Error)"; 
+            tolerance_label.classList.add("form-label", "label-eq");
 
-        const tolerance = document.createElement("input");
-        tolerance.type = "number";
-        tolerance.name = "tolerance";
-        tolerance.id = "tolerance";
-        tolerance.required = true;
-        tolerance.classList.add("form-control", "input-limits")
+            const tolerance = document.createElement("input");
+            tolerance.type = "number";
+            tolerance.name = "tolerance";
+            tolerance.id = "tolerance";
+            tolerance.required = true;
+            tolerance.classList.add("form-control", "input-limits")
 
-        form_inp.appendChild(tolerance_label)
-        form_inp.appendChild(tolerance)
+            form_inp.appendChild(tolerance_label)
+            form_inp.appendChild(tolerance)
+        }
 
         for(let i =1; i <= methodInfo.equations; i++){
             const label = document.createElement("label");
@@ -257,11 +276,12 @@ document.getElementById("s_method").addEventListener("change", function(){
             });
         }
 
+        const pointLabels = NAMEPOINT[id_method] || [];
         for(let j = 1; j <= methodInfo.points; j++){
             const input_Li = document.createElement("input");
             const label_li = document.createElement("label");
 
-            label_li.textContent = `Limite ${j}`;
+            label_li.textContent = pointLabels[j - 1] || `Límite ${j + 1}`;
             label_li.classList.add("form-label", "label-eq");
 
             input_Li.type = "number";
