@@ -1,5 +1,5 @@
 import { apiService } from "./apiService.js";
-import { iterationsTableFilling, iterationsTableSimpsonTrapecios } from "../result_table.js"
+import { iterationsTableFilling, iterationsTableSimpsonTrapecios, iterationsTableTrapecio } from "../result_table.js"
 
 export function executeRequest (id_method, data){
     switch (id_method) {
@@ -259,17 +259,30 @@ async function trapecios(data){
     let tramos = parseFloat(data.limits[2]);
 
     const dataBack = {
-        function: data.equations,
+        function: data.equations[0],
         a: a,
         b: b,
         tramos: tramos
     }
 
-    // try {
-    //     // const response = await apiService.trapecios(dataBack);
-    //     // const
+    try {
+        const response = await apiService.trapecios(dataBack);
+        const result = response.resultado
+        const container = resultCute(result)
+
+        if(response.grafica){
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${response.grafica}`;
+            img.alt = "Resultado grafica secante";
+            img.style.width = '100%';
+            container.appendChild(img);
+        }
+
+        iterationsTableTrapecio(response.iteracion, container);
     
-    // }
+    }catch (error){
+        resultCute("Hubo un error al calcular el resultado con el metodo de TRAPECIOS")
+    }
 }
 async function simpson(data){
     let a = parseFloat(data.limits[0]);

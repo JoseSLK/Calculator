@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import base64
 from io import BytesIO
+from .decode_latex import decode_latex
+from sympy.parsing.latex import parse_latex
+from sympy import symbols, sympify, lambdify, srepr, E
 
 def trapecio(data):
     """
@@ -16,8 +19,22 @@ def trapecio(data):
     dict: Un resultado que contiene el área calculada y los detalles de cada iteración.
     """
     plt.clf()
+    try:
+        decode_fun = decode_latex(data['function'])
 
-    fx = data['function']  # Función para evaluar
+        latex_expr = decode_fun
+        x = symbols('x')
+        sympy_expr = parse_latex(latex_expr)
+        sympy_expr = sympy_expr.subs('e', E)
+
+        fx = lambdify(x, sympy_expr, modules=["numpy", "sympy"])  # Función para evaluar
+    except Exception as e:
+        return {
+            "resultado": f"Error al interpretar la función, por favor digita una funcion valida",
+            "iteracion": [],
+            "grafica": None
+        }
+    
     a = data['a']  # Límite inferior de integración
     b = data['b']  # Límite superior de integración
     tramos = data['tramos']  # Número de tramos
