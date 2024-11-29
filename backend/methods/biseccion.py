@@ -47,7 +47,7 @@ def biseccion(data):
     
     if f_a * f_b > 0:
         return {
-            "resultado": "Error: No hay cambio de signo en los límites, f(a)*f(b) > 0.",
+            "resultado": "Error: No hay cambio de signo en los límites, f(a)*f(b) > 0. El metodo diverge",
             "iteracion": None,
             "grafica": None
         }

@@ -7,12 +7,11 @@ document.getElementById("submit-data").addEventListener("click", function(){
     const equations = [];
     const limits = [];
     let hasError = false;
+    let tolerance = 0;
     
-    if(selectValue !== "9" && selectValue !== "10"){
-        let tolerance = 0;
+    if(selectValue !== "10" && selectValue !== "9"){
         tolerance = document.getElementById("tolerance").value;
         if (tolerance){
-            console.log(`par=${parseFloat(tolerance)}`)
             const {isValid: isToleranceValid, message: toleranceMessage} = validateTolerance(parseFloat(tolerance));
             if(!isToleranceValid){
                 alert(`Error en la toleracia: ${toleranceMessage}`);

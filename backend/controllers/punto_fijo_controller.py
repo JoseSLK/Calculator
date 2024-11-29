@@ -12,13 +12,13 @@ def puntofijo_r():
     # if not valid:
     #     return jsonify({"error": f'{error_message}+function'}), 400
     
-    valid, error_message = validate_numeric(data['initial_point'])
-    if not valid:
-        return jsonify({"error": f'{error_message}+point'})
+    # valid, error_message = validate_numeric(data['initial_point'])
+    # if not valid:
+    #     return jsonify({"error": f'{error_message}+point'})
     
-    valid, error_message = validate_tolerance(data['tolerance'])
-    if not valid:
-        return jsonify({"error": f'{error_message}+tole'}), 400
+    # valid, error_message = validate_tolerance(data['tolerance'])
+    # if not valid:
+    #     return jsonify({"error": f'{error_message}+tole'}), 400
 
     result = puntofijo(data)
     return jsonify(result)

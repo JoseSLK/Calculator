@@ -132,6 +132,6 @@ def puntofijo(data):
     plt.clf()
     return {
         "resultado": "Iteraciones agotadas, no se encontró un punto fijo",
-        "iteracion": None,
+        "iteracion": iteration,
         "grafica": img_base64
     }
