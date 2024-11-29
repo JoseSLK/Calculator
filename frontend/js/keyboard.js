@@ -7,6 +7,7 @@
             {"key":"^2", "print_value": '\\^2'},
             {"key":"^{", "print_value": '\\^{}'},
             {"key":"\\sqrt{}", "print_value": '\\sqrt{ }'},
+            {"key":"\\sqrt[n]{}", "print_value": '\\sqrt[n]{ }'},
             {"key":"x", "print_value": 'x'},
             {"key":"7", "print_value": '7'},
             {"key":"8", "print_value": '8'},
