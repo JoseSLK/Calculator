@@ -71,7 +71,9 @@ def secante(data):
                 "error" : (p - p1)
             })
         
-            plt.plot([p0, p1], [f(p0), f(p1)], color='red', linestyle='--', linewidth=1)
+            x_range = np.linspace(p0 - 2, p1 + 2, 100)
+            y_range = f(p0) + ((f(p1) - f(p0)) / (p1 - p0)) * (x_range - p0)
+            plt.plot(x_range, y_range, color='red', linestyle='--', linewidth=3)  
         
             if abs(p - p1) < tol: 
                 buf = BytesIO()
