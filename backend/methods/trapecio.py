@@ -51,7 +51,7 @@ def trapecio(data):
         plt.plot(x_vals, y_vals, label='f(x)', color='blue', linewidth=2)
         plt.xlabel('x')
         plt.ylabel('f(x)')
-        plt.title(f'Grafica {fx}')
+        plt.title(f'Grafica {sympy_expr}')
         plt.legend()
         plt.grid(True) 
 
@@ -93,7 +93,7 @@ def trapecio(data):
         }
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }

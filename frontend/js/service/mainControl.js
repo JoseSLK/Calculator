@@ -53,12 +53,12 @@ async function puntofijo(data){
         initial_point: point,
         tolerance: tol
     }
-    console.log("--------- ANNTES")
-    console.log(JSON.stringify(dataBack))
-    console.log("---------")
+    // console.log("--------- ANNTES")
+    // console.log(JSON.stringify(dataBack))
+    // console.log("---------")
 
     const response =  await apiService.puntofijo(dataBack);
-    console.log(JSON.stringify(response))
+    // console.log(JSON.stringify(response))
 
     const result = response.resultado;
 
@@ -90,13 +90,13 @@ async function biseccion(data) {
         tolerance: tol
     }
 
-    console.log("--------- ANTES DE ENVIAR A BACKEND")
-    console.log(JSON.stringify(dataBack))
-    console.log("---------")
+    // console.log("--------- ANTES DE ENVIAR A BACKEND")
+    // console.log(JSON.stringify(dataBack))
+    // console.log("---------")
     try {
 
         const response = await apiService.biseccion(dataBack);
-        console.log(JSON.stringify(response))
+        // console.log(JSON.stringify(response))
 
         const result = response.resultado;
 
@@ -190,12 +190,12 @@ async function broyden(data){
         initial_point: data.limits,
         tolerance: tol
     }
-    console.log("Esto va al back")
-    console.log(dataBack)
+    // console.log("Esto va al back")
+    // console.log(dataBack)
 
     try{
         const response = await apiService.broyden(dataBack);
-        console.log(response.mensaje);
+        // console.log(response.mensaje);
         const result = response.resultado;
         const container = resultCute(result);
 
@@ -299,7 +299,7 @@ async function simpson(data){
         b: b,
         tramos: tramos
     }
-    console.log(dataBack)
+    // console.log(dataBack)
 
     try {
         const response = await apiService.simpson(dataBack);

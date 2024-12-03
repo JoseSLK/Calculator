@@ -48,7 +48,7 @@ def gauss_seidel(data):
         }
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }

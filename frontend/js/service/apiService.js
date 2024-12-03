@@ -10,6 +10,12 @@ async function postRequest (endpoint, data) {
 
         if (!response.ok){
             const errorData = await response.json();
+
+            if (response.status === 400) {
+                alert(`Error: ${errorData.error || 'Solicitud inválida'}`);
+                return null;
+            }
+
             throw new Error(errorData.message || 'Error en la solicitud'); 
         }
 

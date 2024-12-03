@@ -67,7 +67,7 @@ def simpson(data):
 
         plt.xlabel('x')
         plt.ylabel('f(x)')
-        plt.title(f'Grafica {fx}')
+        plt.title(f'Grafica {sympy_expr}')
         plt.legend()
         plt.grid(True)
 
@@ -110,7 +110,7 @@ def simpson(data):
         }
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }

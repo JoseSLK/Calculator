@@ -56,7 +56,7 @@ def puntofijo(data):
         plt.plot(x_vals, y_vals, label=f'f(x)', color='blue', linewidth=2)
         plt.xlabel('x')
         plt.ylabel('y')
-        plt.title(f'Grafica {latex_expr}')
+        plt.title(f'Grafica {sympy_expr}')
         plt.legend()
         plt.grid(True)
 
@@ -137,7 +137,7 @@ def puntofijo(data):
         }
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }

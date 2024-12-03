@@ -25,7 +25,7 @@ def biseccion(data):
             f = lambdify(x, sympy_expr, modules=["numpy", "sympy"])
         except Exception as e:
             return {
-                "error": f"Error al interpretar la función: {e}",
+                "resultado": f"Error al interpretar la función: {e}",
                 "iteracion": [],
                 "grafica": None
             }
@@ -114,7 +114,7 @@ def biseccion(data):
     
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }

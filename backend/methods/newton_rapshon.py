@@ -28,7 +28,7 @@ def newton(data):
 
         except Exception as e:
             return{
-                "error": f"Error al interpretar la función, por favor digita una funcion valida",
+                "resultado": f"Error al interpretar la función, por favor digita una funcion valida",
                 "iteracion": [],
                 "grafica": None 
             }
@@ -101,7 +101,7 @@ def newton(data):
         }
     except Exception as e:
             return {
-                "error": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
+                "resultado": f"Hubo un error, por favor asegurate de que los campos esten llenos y de que la funcion sea valida",
                 "iteracion": [],
                 "grafica": None
             }
