@@ -168,6 +168,55 @@ a ≈ 1.5918, b ≈ 0.9191, c ≈ 1.3852
     </div>
             `;
             container.innerHTML = teamContent;
+        } else if(selectElement.value === "4"){
+            const content = `
+            <div class="broyden-info">
+                <h3>Método de Newton-Raphson</h3>
+                <p>
+                    El método de Newton-Raphson es una técnica iterativa utilizada para encontrar las raíces de una función no lineal. 
+                    Para su implementación, es fundamental que el usuario proporcione:
+                </p>
+                <ul>
+                    <li><strong>Ecuación 1:</strong> Representa la función <em>f(x)</em>.</li>
+                    <li><strong>Ecuación 2:</strong> Representa la derivada de la función <em>f'(x)</em>.</li>
+                    <li><strong>Valor inicial:</strong> Un valor <em>x<sub>0</sub></em> cercano a la raíz esperada.</li>
+                </ul>
+                <h4>Ejemplo</h4>
+                <p>Supongamos que queremos encontrar la raíz de la función:</p>
+                <div class="example">
+                    <ul>
+                        <li><em>f(x) = x<sup>2</sup> - 2</em> (Ecuación 1)</li>
+                        <li><em>f'(x) = 2x</em> (Ecuación 2)</li>
+                    </ul>
+                </div>
+                <p>Usando un valor inicial <em>x<sub>0</sub> = 1</em>, el método calculará iterativamente hasta encontrar una raíz con una tolerancia aceptable.</p>
+                <div class="invitation">
+                    <p>
+                        ¡Invitamos a todos los usuarios a probar este método y experimentar su velocidad y precisión!<br>
+                        <span class="please">✨ No olvides elegir bien tu valor inicial ✨</span>
+                    </p>
+                </div>
+            </div>
+            `;
+            container.innerHTML = content;
+        } else if (selectElement.value === "6"){
+            const content = `
+            <div class="broyden-info">
+                <h3>Método de Newton-Raphson para Sistemas</h3>
+                <p>
+                    Actualmente, el método de Newton-Raphson para sistemas de ecuaciones no está implementado en esta versión de la calculadora.  
+                    Estamos trabajando arduamente para incluirlo en una próxima actualización.
+                </p>
+                <p class="quote">✨ <em>"La paciencia es una virtud, y pronto habrá grandes mejoras."</em> ✨</p>
+                <div class="invitation">
+                    <p>
+                        Mientras tanto, te invitamos a explorar nuestros otros métodos disponibles.<br>
+                        <span class="please">¡Gracias por tu comprensión y apoyo! 🙏</span>
+                    </p>
+                </div>
+            </div>
+            `;
+            container.innerHTML = content;
         }
     });
 

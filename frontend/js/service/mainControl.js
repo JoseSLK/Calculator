@@ -93,23 +93,27 @@ async function biseccion(data) {
     console.log("--------- ANTES DE ENVIAR A BACKEND")
     console.log(JSON.stringify(dataBack))
     console.log("---------")
+    try {
 
-    const response = await apiService.biseccion(dataBack);
-    console.log(JSON.stringify(response))
+        const response = await apiService.biseccion(dataBack);
+        console.log(JSON.stringify(response))
 
-    const result = response.resultado;
+        const result = response.resultado;
 
-    const container = resultCute(result)
+        const container = resultCute(result)
 
-    if (response.grafica) {
-        const img = document.createElement('img');
-        img.src = `data:image/png;base64,${response.grafica}`;
-        img.alt = "Resultado gráfica bisección";
-        img.style.width = '100%';
-        container.appendChild(img);
+        if (response.grafica) {
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${response.grafica}`;
+            img.alt = "Resultado gráfica bisección";
+            img.style.width = '100%';
+            container.appendChild(img);
+        }
+
+        iterationsTableFilling(response.iteracion, container);
+    } catch (error){
+        resultCute("Hubo un error al calcular la solucion usando el metodo NEWTON RAPHSON")
     }
-
-    iterationsTableFilling(response.iteracion, container);
 }
 
 async function secante(data){

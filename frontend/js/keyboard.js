@@ -58,13 +58,13 @@
             const mathField = mathFieldContainer.mathFieldInstance;
             if (mathField) {
                 activeMathField = mathField;
-                console.log("Campo MathQuill activo:", mathField.latex());
-            } else {
-                console.error("mathFieldInstance no encontrado en el contenedor MathQuill.");
-            }
-        } else {
-            console.log("El elemento con foco no es un campo MathQuill:", targetElement);
-        }
+                // console.log("Campo MathQuill activo:", mathField.latex());
+            } //else {
+            //     console.error("mathFieldInstance no encontrado en el contenedor MathQuill.");
+            // }
+        } //else {
+        //     console.log("El elemento con foco no es un campo MathQuill:", targetElement);
+        // }
     });
     
 
@@ -72,7 +72,7 @@
     function loadKeyboard() {
         const keyboardContainer = document.querySelector('.keyboard');
         keyboardContainer.innerHTML = '';
-        console.log("Cargando teclado...");
+        // console.log("Cargando teclado...");
 
         // Crear las filas del teclado
         keyboard_keys.forEach(rows => {
@@ -102,25 +102,25 @@
             
             keyboardContainer.appendChild(rowDiv);
         });
-        console.log("Teclado cargado con éxito");
+        // console.log("Teclado cargado con éxito");
     }
 
     // Maneja la acción de presionar una tecla en el teclado
     function handleKeyPress(value) {
-        console.log("Tecla presionada: " + value);
+        // console.log("Tecla presionada: " + value);
         if (activeMathField) {
             if (value === "del") {
-                console.log("Borrando último carácter");
+                // console.log("Borrando último carácter");
                 activeMathField.keystroke('Backspace');
             } else {
-                console.log("Escribiendo en el campo MathQuill: " + value);
+                // console.log("Escribiendo en el campo MathQuill: " + value);
                 activeMathField.write(value);
             }
     
             // Enfocar manualmente el campo MathQuill
             activeMathField.focus();
         } else {
-            console.log("No hay un campo MathQuill activo para escribir");
+            // console.log("No hay un campo MathQuill activo para escribir");
         }
     }
 

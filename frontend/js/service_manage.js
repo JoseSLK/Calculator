@@ -27,7 +27,7 @@ document.getElementById("submit-data").addEventListener("click", function(){
     if(selectValue === "7" || selectValue === "8"){
         const numEquations = parseInt(document.getElementsByName("nequations")[0].value, 10);
         if (!numEquations || numEquations < 1 || numEquations > 8) {
-            alert("Por favor, ingresa un número válido de ecuaciones (entre 1 y 8).");
+            alert("Por favor, ingresa un número válido de ecuaciones (entre 2 y 8).");
             hasError = true;
             return;
         }
@@ -114,17 +114,17 @@ document.getElementById("submit-data").addEventListener("click", function(){
             max_iter: parseFloat(iteration)
         };
 
-        console.log("Datos enviados:", JSON.stringify(formData));
+        // console.log("Datos enviados:", JSON.stringify(formData));
         executeRequest(selectValue, formData);
 
     }else{
         form_eq.querySelectorAll(".mathquill-input").forEach(mathquillContainer => {
             const mathField = MQ.MathField(mathquillContainer);
             const latex = mathField.latex();
-            console.log(`EQ: ${latex}`)
+            // console.log(`EQ: ${latex}`)
 
             const d64 = btoa(latex);
-            console.log(`EQD64: ${d64}`)
+            // console.log(`EQD64: ${d64}`)
 
             equations.push(d64);
         });
@@ -165,7 +165,7 @@ document.getElementById("submit-data").addEventListener("click", function(){
             }; 
         }
 
-        console.log(JSON.stringify(formData));
+        // console.log(JSON.stringify(formData));
         executeRequest(selectValue,formData);
     }
 });

@@ -5,7 +5,7 @@ const MQ = MathQuill.getInterface(2);
 
 document.getElementById("s_method").addEventListener("change", function(){
     const id_method = document.getElementById("s_method").value
-    console.log(id_method) 
+    // console.log(id_method) 
 
     const methodInfo = METHODS[id_method];
     const form_eq = document.getElementById("equation_form");
@@ -13,7 +13,7 @@ document.getElementById("s_method").addEventListener("change", function(){
     let input_var;
 
     if (id_method === "5" || id_method === "6" || id_method === "7" || id_method === "8"){
-        console.log("ENTRO")
+        // console.log("ENTRO")
         const hr = document.createElement("hr")
         hr.classList.add("humble-hr")
 
@@ -181,7 +181,7 @@ document.getElementById("s_method").addEventListener("change", function(){
                     const mathField = MQ.MathField(mathquillContainer, {
                         handlers: {
                             edit: () => {
-                                console.log("Edición en MathField: " + mathField.latex());
+                                // console.log("Edición en MathField: " + mathField.latex());
                             }
                         },
                         placeholder: "Escribe aquí tu ecuación"
@@ -253,7 +253,7 @@ document.getElementById("s_method").addEventListener("change", function(){
             const mathField = MQ.MathField(mathquillContainer, {
                 handlers: {
                     edit: () => {
-                        console.log("Edición en MathField: " + mathField.latex());
+                        // console.log("Edición en MathField: " + mathField.latex());
                     }
                 },
                 placeholder: "Escribe aquí tu ecuación"
@@ -267,7 +267,7 @@ document.getElementById("s_method").addEventListener("change", function(){
                 const mathField = MQ.MathField(element, {
                     handlers: {
                         edit: () => {
-                            console.log("Edición en MathField: " + mathField.latex());
+                            // console.log("Edición en MathField: " + mathField.latex());
                         }
                     },
                     placeholder: "Escribe aquí tu ecuación"
