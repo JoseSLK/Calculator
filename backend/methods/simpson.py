@@ -57,11 +57,8 @@ def simpson(data):
         suma = fx(xi)
         iteration = []
 
-        x_min, x_max = -10, 10
-        num_puntos = 1000
-
-        x_vals = np.linspace(x_min, x_max, num_puntos)
-        y_vals = [fx(x) for x in x_vals] 
+        x_vals = np.linspace(a - 1, b + 1, 400)
+        y_vals = [fx(x) for x in x_vals]
 
         plt.plot(x_vals, y_vals, label='f(x)', color='blue', linewidth=2)
 
